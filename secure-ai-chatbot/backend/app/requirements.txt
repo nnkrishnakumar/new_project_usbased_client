@@ -1,0 +1,8 @@
+# backend/app/requirements.txt
+fastapi
+python-dotenv
+requests
+uvicorn
+
+
+

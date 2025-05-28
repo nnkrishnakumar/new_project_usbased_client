@@ -1,0 +1,33 @@
+# shared/uploads/ (this is a directory for storing user files)
+# [no code needed — make sure this is volume-mounted in Docker]
+
+
+# docker-compose.yml
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend/app
+    container_name: backend
+    volumes:
+      - ./shared/uploads:/app/uploads
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  sandbox:
+    build: ./sandbox
+    container_name: sandbox
+    volumes:
+      - ./shared/uploads:/shared/uploads
+    stdin_open: true
+    tty: true
